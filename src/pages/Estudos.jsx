@@ -50,7 +50,7 @@ export default function Estudos() {
       const res = await fetch('/api/chat', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
-          model:'claude-sonnet-4-20250514', max_tokens:1000, system:SYSTEM_PROMPT,
+          model:'claude-opus-4-5', max_tokens:1000, system:SYSTEM_PROMPT,
           messages:[{ role:'user', content:`Escreva um artigo de estudo espírita com título "${art.title}", baseado na obra "${art.obra}" de ${current.name}. Tema: ${art.desc}` }]
         })
       })

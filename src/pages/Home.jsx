@@ -96,7 +96,7 @@ export default function Home() {
     try {
       const res = await fetch('/api/chat', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, system:SYSTEM_PROMPT, messages:newMsgs })
+        body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:1000, system:SYSTEM_PROMPT, messages:newMsgs })
       })
       const data = await res.json()
       setMessages(prev => [...prev, { role:'assistant', content: data.content?.[0]?.text || 'Erro ao processar.' }])
