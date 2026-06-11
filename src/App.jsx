@@ -7,12 +7,14 @@ import Esperanto from './pages/Esperanto'
 import Glossario from './pages/Glossario'
 import Sobre from './pages/Sobre'
 import Admin from './pages/Admin'
+import Chat from './pages/Chat'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/estudos" element={<Estudos />} />
         <Route path="/biblioteca" element={<Biblioteca />} />
         <Route path="/canais" element={<Canais />} />

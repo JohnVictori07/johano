@@ -360,7 +360,7 @@ export default function Home() {
             {messages.map((m,i) => (
               <div key={i} className={`msg${m.role==='user'?' msg-u':''}`}>
                 {m.role==='assistant' && <div className="msg-dot">J</div>}
-                <div className="bubble">{m.content}</div>
+                <div className="bubble" dangerouslySetInnerHTML={{__html: m.role==='assistant' ? m.content.replace(/\*\*(.*?)\*\*/g,'<strong style="color:#1a3a6b">$1</strong>').replace(/\n\n/g,'</p><p style="margin:10px 0">').replace(/\n/g,'<br/>') : m.content}} />
               </div>
             ))}
             {loading && <div className="msg"><div className="msg-dot">J</div><div className="bubble"><div className="typing"><span/><span/><span/></div></div></div>}
