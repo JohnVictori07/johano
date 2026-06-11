@@ -320,7 +320,7 @@ export default function Home() {
         <p className="hero-sub">Saĝo · Amo · Lumo — Sabedoria · Amor · Luz</p>
         <div className="hero-divider">✦</div>
         <p className="hero-desc">Um espaço de estudo, reflexão e aprofundamento na Doutrina Espírita, aberto a todos que buscam compreender a vida com mais luz.</p>
-        <button className="btn-p" onClick={() => document.getElementById('chat').scrollIntoView({behavior:'smooth'})}>Conversar com o Johano</button>
+        <button className="btn-p" onClick={() => navigate('/chat')}>Conversar com o Johano</button>
         <button className="btn-s" onClick={() => navigate('/estudos')}>Começar os Estudos</button>
       </section>
 
@@ -390,6 +390,18 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* CTA CHAT */}
+      <div style={{ background:'#1a3a6b', padding:'48px 32px', textAlign:'center', borderBottom:'1px solid #e0d8c8' }}>
+        <p style={{ fontSize:'10px', letterSpacing:'0.22em', color:'rgba(201,166,80,0.7)', textTransform:'uppercase', marginBottom:'12px' }}>Experiência Completa</p>
+        <h2 style={{ fontFamily:"'Cinzel',serif", fontSize:'26px', color:'#fff', letterSpacing:'0.04em', marginBottom:'12px', fontWeight:500 }}>Johano Chat</h2>
+        <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.75)', maxWidth:'500px', margin:'0 auto 24px', lineHeight:1.8, fontWeight:300 }}>Acesse a versão completa do Johano — com histórico de conversas, envio de PDFs para análise e experiência de tela cheia.</p>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'10px', flexWrap:'wrap' }}>
+          <button onClick={()=>navigate('/chat')} style={{ background:'#c9a650', color:'#1a3a6b', border:'none', borderRadius:'2px', padding:'14px 36px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.1em', cursor:'pointer', textTransform:'uppercase', fontWeight:600 }}>Abrir o Chat Completo</button>
+          <button onClick={()=>{ navigator.clipboard&&navigator.clipboard.writeText('https://www.johano.com.br/chat') }} style={{ background:'transparent', color:'rgba(255,255,255,0.7)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'2px', padding:'14px 24px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer', textTransform:'uppercase' }}>🔗 Compartilhar</button>
+        </div>
+        <p style={{ fontSize:'11px', color:'rgba(255,255,255,0.4)', marginTop:'16px', fontStyle:'italic' }}>💾 As conversas ficam salvas apenas no navegador deste dispositivo</p>
+      </div>
 
       <div className="quote-sec">
         <p className="q-label">Frase do Dia</p>
