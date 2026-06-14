@@ -152,6 +152,26 @@ export default function Esperanto() {
         </div>
       </div>
 
+      {/* CTA CURSO JOHANO */}
+      <div className="ep-cta">
+        <p style={{ fontSize:'10px', letterSpacing:'0.22em', color:'rgba(201,166,80,0.7)', textTransform:'uppercase', marginBottom:'12px' }}>Novidade no Johano</p>
+        <div style={{ fontSize:'48px', marginBottom:'12px' }}>🌟</div>
+        <h2 style={{ fontFamily:"'Cinzel',serif", fontSize:'28px', color:'#fff', letterSpacing:'0.04em', marginBottom:'12px', fontWeight:500 }}>Aprenda Esperanto aqui no Johano!</h2>
+        <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.75)', maxWidth:'540px', margin:'0 auto 28px', lineHeight:1.85, fontWeight:300 }}>O Johano tem um curso completo de Esperanto — 20 lições com áudio para ouvir a pronúncia, microfone para praticar falando e chat de conversação com o Johano em Esperanto. Tudo gratuito!</p>
+        <div style={{ display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'16px' }}>
+          <button onClick={()=>navigate('/esperanto/aprender')} style={{ background:'#c9a650', color:'#1a3a6b', border:'none', borderRadius:'2px', padding:'14px 36px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.1em', cursor:'pointer', fontWeight:600, textTransform:'uppercase' }}>Começar o Curso Grátis</button>
+          <button onClick={()=>navigate('/esperanto/chat')} style={{ background:'transparent', color:'rgba(255,255,255,0.8)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'2px', padding:'14px 24px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer', textTransform:'uppercase' }}>🎤 Chat em Esperanto</button>
+        </div>
+        <div style={{ display:'flex', gap:'24px', justifyContent:'center', flexWrap:'wrap' }}>
+          {[['20','Lições'],['🔊','Áudio'],['🎤','Microfone'],['🤖','Chat com IA']].map(([v,l]) => (
+            <div key={l} style={{ textAlign:'center' }}>
+              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'20px', color:'#c9a650' }}>{v}</div>
+              <div style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)' }}>{l}</div>
+            </div>
+          ))}
+        </div>
+
+
       {/* CONEXÃO */}
       <div className="ep-sec">
         <p className="s-label">A Ligação</p>
@@ -259,24 +279,6 @@ export default function Esperanto() {
         </div>
       </div>
 
-      {/* CTA CURSO JOHANO */}
-      <div className="ep-cta">
-        <p style={{ fontSize:'10px', letterSpacing:'0.22em', color:'rgba(201,166,80,0.7)', textTransform:'uppercase', marginBottom:'12px' }}>Novidade no Johano</p>
-        <div style={{ fontSize:'48px', marginBottom:'12px' }}>🌟</div>
-        <h2 style={{ fontFamily:"'Cinzel',serif", fontSize:'28px', color:'#fff', letterSpacing:'0.04em', marginBottom:'12px', fontWeight:500 }}>Aprenda Esperanto aqui no Johano!</h2>
-        <p style={{ fontSize:'16px', color:'rgba(255,255,255,0.75)', maxWidth:'540px', margin:'0 auto 28px', lineHeight:1.85, fontWeight:300 }}>O Johano tem um curso completo de Esperanto — 20 lições com áudio para ouvir a pronúncia, microfone para praticar falando e chat de conversação com o Johano em Esperanto. Tudo gratuito!</p>
-        <div style={{ display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'16px' }}>
-          <button onClick={()=>navigate('/esperanto/aprender')} style={{ background:'#c9a650', color:'#1a3a6b', border:'none', borderRadius:'2px', padding:'14px 36px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.1em', cursor:'pointer', fontWeight:600, textTransform:'uppercase' }}>Começar o Curso Grátis</button>
-          <button onClick={()=>navigate('/esperanto/chat')} style={{ background:'transparent', color:'rgba(255,255,255,0.8)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:'2px', padding:'14px 24px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer', textTransform:'uppercase' }}>🎤 Chat em Esperanto</button>
-        </div>
-        <div style={{ display:'flex', gap:'24px', justifyContent:'center', flexWrap:'wrap' }}>
-          {[['20','Lições'],['🔊','Áudio'],['🎤','Microfone'],['🤖','Chat com IA']].map(([v,l]) => (
-            <div key={l} style={{ textAlign:'center' }}>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'20px', color:'#c9a650' }}>{v}</div>
-              <div style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)' }}>{l}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       <footer style={{ padding:'28px 32px', display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:'1px solid #e0d8c8', background:'#f8f6f2', flexWrap:'wrap', gap:'12px' }}>
