@@ -152,6 +152,25 @@ export default function Esperanto() {
         </div>
       </div>
 
+      {/* CONEXÃO */}
+      <div className="ep-sec">
+        <p className="s-label">A Ligação</p>
+        <h2 className="s-title">Esperanto & Espiritismo</h2>
+        <div className="s-rule"></div>
+        <div className="ep-quote">
+          <p style={{ fontSize:'18px', fontStyle:'italic', color:'#e8e0cc', lineHeight:1.85, fontWeight:300, marginBottom:'10px' }}>"Não existe para o espírito nem Oriente nem Ocidente, nem Norte nem Sul. Todos os homens são irmãos."</p>
+          <p style={{ fontSize:'12px', color:'rgba(201,166,80,0.8)', fontStyle:'italic' }}>Espírito de Verdade — O Livro dos Espíritos, Allan Kardec</p>
+        </div>
+        <div className="ep-conn-grid">
+          {connections.map(c => (
+            <div className="ep-conn" key={c.title}>
+              <p className="ep-conn-title">{c.title}</p>
+              <p className="ep-conn-text">{c.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* CTA CURSO JOHANO */}
       <div className="ep-cta">
         <p style={{ fontSize:'10px', letterSpacing:'0.22em', color:'rgba(201,166,80,0.7)', textTransform:'uppercase', marginBottom:'12px' }}>Novidade no Johano</p>
@@ -171,25 +190,6 @@ export default function Esperanto() {
           ))}
         </div>
 
-
-      {/* CONEXÃO */}
-      <div className="ep-sec">
-        <p className="s-label">A Ligação</p>
-        <h2 className="s-title">Esperanto & Espiritismo</h2>
-        <div className="s-rule"></div>
-        <div className="ep-quote">
-          <p style={{ fontSize:'18px', fontStyle:'italic', color:'#e8e0cc', lineHeight:1.85, fontWeight:300, marginBottom:'10px' }}>"Não existe para o espírito nem Oriente nem Ocidente, nem Norte nem Sul. Todos os homens são irmãos."</p>
-          <p style={{ fontSize:'12px', color:'rgba(201,166,80,0.8)', fontStyle:'italic' }}>Espírito de Verdade — O Livro dos Espíritos, Allan Kardec</p>
-        </div>
-        <div className="ep-conn-grid">
-          {connections.map(c => (
-            <div className="ep-conn" key={c.title}>
-              <p className="ep-conn-title">{c.title}</p>
-              <p className="ep-conn-text">{c.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* FRASES PARALELAS */}
       <div className="ep-sec">
