@@ -410,6 +410,31 @@ export default function Home() {
         <p className="q-src">— Allan Kardec · O Evangelho Segundo o Espiritismo</p>
       </div>
 
+      {/* ESPERANTO CTA */}
+      <section className="section" style={{ background:'#f8f6f2' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'32px', alignItems:'center' }}>
+          <div>
+            <p className="section-label">Novidade</p>
+            <h2 className="section-title">Aprenda Esperanto</h2>
+            <div className="section-rule"></div>
+            <p style={{ fontSize:'16px', color:'#555', lineHeight:1.9, fontWeight:300, marginBottom:'20px' }}>O Johano tem um curso completo de Esperanto — a língua da fraternidade universal. 20 lições com áudio, microfone para praticar e chat de conversação. Tudo gratuito!</p>
+            <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+              <button className="btn-p" onClick={()=>navigate('/esperanto/aprender')}>Começar o Curso</button>
+              <button className="btn-s" onClick={()=>navigate('/esperanto')}>Saiba mais</button>
+            </div>
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'10px' }}>
+            {[['20','Lições completas','📖'],['🔊','Áudio em Esperanto','Ouça a pronúncia'],['🎤','Microfone','Pratique falando'],['🤖','Chat com IA','Converse com o Johano']].map(([icon,title,desc]) => (
+              <div key={title} style={{ background:'#fff', border:'1px solid #e0d8c8', borderRadius:'8px', padding:'16px', textAlign:'center' }}>
+                <div style={{ fontSize:'28px', marginBottom:'6px' }}>{icon}</div>
+                <div style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'3px' }}>{title}</div>
+                <div style={{ fontSize:'12px', color:'#aaa', fontWeight:300 }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <footer className="footer">
         <div className="f-logo">✦ JOHANO</div>
         <ul className="f-links">
