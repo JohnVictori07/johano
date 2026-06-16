@@ -733,13 +733,15 @@ export default function EsperantoLicao() {
             </div>
           ))}
           <div style={{ marginTop:'20px', padding:'16px', background:'#f8f6f2', borderRadius:'6px', border:'1px solid #e0d8c8' }}>
-            <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'16px', flexWrap:'wrap' }}>
-              <div style={{ flex:1 }}>
-                <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'8px' }}>📢 Dica de pronúncia</p>
-                <p style={{ fontSize:'13.5px', color:'#666', lineHeight:1.7, fontWeight:300 }}>{licao.pronuncia}</p>
-              </div>
-              <button onClick={()=>setAba('pronuncia')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>🔊 Pronúncia →</button>
+            <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'8px' }}>📢 Dica de pronúncia</p>
+            <p style={{ fontSize:'13.5px', color:'#666', lineHeight:1.7, fontWeight:300 }}>{licao.pronuncia}</p>
+          </div>
+          <div style={{ marginTop:'16px', background:'#eef2f8', border:'1px solid #d0d8e8', borderRadius:'8px', padding:'16px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px' }}>
+            <div>
+              <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'3px' }}>Pronto com o vocabulário?</p>
+              <p style={{ fontSize:'12px', color:'#888', fontWeight:300 }}>Próximo passo: ouça a pronúncia de cada palavra</p>
             </div>
+            <button onClick={()=>setAba('pronuncia')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'12px 24px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>🔊 Pronúncia →</button>
           </div>
 
         </div>
@@ -761,8 +763,12 @@ export default function EsperantoLicao() {
             ))}
           </div>
 
-          <div style={{ marginTop:'20px', display:'flex', justifyContent:'flex-end' }}>
-            <button onClick={()=>setAba('dialogos')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer' }}>💬 Diálogo →</button>
+          <div style={{ marginTop:'16px', background:'#eef2f8', border:'1px solid #d0d8e8', borderRadius:'8px', padding:'16px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px' }}>
+            <div>
+              <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'3px' }}>Pronúncia praticada?</p>
+              <p style={{ fontSize:'12px', color:'#888', fontWeight:300 }}>Próximo passo: leia e ouça os diálogos</p>
+            </div>
+            <button onClick={()=>setAba('dialogos')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'12px 24px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>💬 Diálogo →</button>
           </div>
         </div>
       )}
@@ -781,12 +787,16 @@ export default function EsperantoLicao() {
               ))}
             </div>
           ))}
-          <div style={{ padding:'14px', background:'#eef2f8', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'16px', flexWrap:'wrap' }}>
+          <div style={{ padding:'14px', background:'#f8f6f2', borderRadius:'6px', border:'1px solid #e0d8c8', marginBottom:'12px' }}>
+            <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'6px' }}>💡 Dica</p>
+            <p style={{ fontSize:'13px', color:'#555', fontWeight:300 }}>Leia o diálogo em voz alta antes de ouvir. Compare sua pronúncia com o áudio!</p>
+          </div>
+          <div style={{ background:'#eef2f8', border:'1px solid #d0d8e8', borderRadius:'8px', padding:'16px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px' }}>
             <div>
-              <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'6px' }}>💡 Dica</p>
-              <p style={{ fontSize:'13px', color:'#555', fontWeight:300 }}>Leia o diálogo em voz alta antes de ouvir. Compare sua pronúncia com o áudio!</p>
+              <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'3px' }}>Diálogo praticado?</p>
+              <p style={{ fontSize:'12px', color:'#888', fontWeight:300 }}>Próximo passo: teste seus conhecimentos</p>
             </div>
-            <button onClick={()=>setAba('exercicios')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>✏️ Exercícios →</button>
+            <button onClick={()=>setAba('exercicios')} style={{ background:'#c9a650', color:'#1a3a6b', border:'none', borderRadius:'4px', padding:'12px 24px', fontFamily:"'Cinzel',serif", fontSize:'13px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0, fontWeight:600 }}>✏️ Exercícios →</button>
           </div>
 
         </div>
