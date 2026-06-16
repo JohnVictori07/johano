@@ -733,12 +733,15 @@ export default function EsperantoLicao() {
             </div>
           ))}
           <div style={{ marginTop:'20px', padding:'16px', background:'#f8f6f2', borderRadius:'6px', border:'1px solid #e0d8c8' }}>
-            <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'8px' }}>📢 Dica de pronúncia</p>
-            <p style={{ fontSize:'13.5px', color:'#666', lineHeight:1.7, fontWeight:300 }}>{licao.pronuncia}</p>
+            <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'16px', flexWrap:'wrap' }}>
+              <div style={{ flex:1 }}>
+                <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'8px' }}>📢 Dica de pronúncia</p>
+                <p style={{ fontSize:'13.5px', color:'#666', lineHeight:1.7, fontWeight:300 }}>{licao.pronuncia}</p>
+              </div>
+              <button onClick={()=>setAba('pronuncia')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>🔊 Pronúncia →</button>
+            </div>
           </div>
-          <div style={{ marginTop:'24px', display:'flex', justifyContent:'flex-end' }}>
-            <button onClick={()=>setAba('pronuncia')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 22px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer' }}>🔊 Ir para Pronúncia →</button>
-          </div>
+
         </div>
       )}
 
@@ -757,8 +760,9 @@ export default function EsperantoLicao() {
               </div>
             ))}
           </div>
-          <div style={{ marginTop:'24px', display:'flex', justifyContent:'flex-end' }}>
-            <button onClick={()=>setAba('dialogos')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 22px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer' }}>💬 Ir para Diálogo →</button>
+
+          <div style={{ marginTop:'20px', display:'flex', justifyContent:'flex-end' }}>
+            <button onClick={()=>setAba('dialogos')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer' }}>💬 Diálogo →</button>
           </div>
         </div>
       )}
@@ -777,13 +781,14 @@ export default function EsperantoLicao() {
               ))}
             </div>
           ))}
-          <div style={{ padding:'14px', background:'#eef2f8', borderRadius:'6px' }}>
-            <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'6px' }}>💡 Dica</p>
-            <p style={{ fontSize:'13px', color:'#555', fontWeight:300 }}>Leia o diálogo em voz alta antes de ouvir. Compare sua pronúncia com o áudio!</p>
+          <div style={{ padding:'14px', background:'#eef2f8', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'16px', flexWrap:'wrap' }}>
+            <div>
+              <p style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', color:'#1a3a6b', marginBottom:'6px' }}>💡 Dica</p>
+              <p style={{ fontSize:'13px', color:'#555', fontWeight:300 }}>Leia o diálogo em voz alta antes de ouvir. Compare sua pronúncia com o áudio!</p>
+            </div>
+            <button onClick={()=>setAba('exercicios')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 18px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', whiteSpace:'nowrap', flexShrink:0 }}>✏️ Exercícios →</button>
           </div>
-          <div style={{ marginTop:'24px', display:'flex', justifyContent:'flex-end' }}>
-            <button onClick={()=>setAba('exercicios')} style={{ background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'4px', padding:'10px 22px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.08em', cursor:'pointer' }}>✏️ Ir para Exercícios →</button>
-          </div>
+
         </div>
       )}
 
