@@ -31,24 +31,35 @@ const licoes_intermediario = [
 export default function EsperantoAprender() {
   const navigate = useNavigate()
   const [nivel, setNivel] = useState('iniciante')
-  const [progresso, setProgresso] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('johano_eo_progresso') || '{}') } catch { return {} }
-  })
+  const [progresso, setProgresso] = useState({})
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('johano_eo_progresso') || '{}')
+      setProgresso(saved)
+    } catch { setProgresso({}) }
+  }, [])
 
   const licoes = nivel === 'iniciante' ? licoes_iniciante : licoes_intermediario
 
   const getLicaoStatus = (num) => {
     if (progresso[num] === 'completo') return 'completo'
-    const primeiraIncompleta = licoes.find(l => progresso[l.num] !== 'completo')
-    if (primeiraIncompleta && primeiraIncompleta.num === num) return 'disponivel'
-    if (progresso[num] === 'completo') return 'completo'
-    const anterior = licoes.find(l => l.num === num - 1)
-    if (!anterior || progresso[anterior.num] === 'completo') return 'disponivel'
+    // primeira licao sempre disponivel
+    if (num === licoes[0].num) return 'disponivel'
+    // verifica se a licao anterior foi concluida
+    const idxAtual = licoes.findIndex(l => l.num === num)
+    if (idxAtual <= 0) return 'disponivel'
+    const anterior = licoes[idxAtual - 1]
+    if (progresso[anterior.num] === 'completo') return 'disponivel'
     return 'bloqueado'
   }
 
-  const totalCompletos = licoes.filter(l => progresso[l.num] === 'completo').length
-  const pct = Math.round((totalCompletos / licoes.length) * 100)
+  const todasLicoes = [...licoes_iniciante, ...licoes_intermediario]
+  const totalCompletos = todasLicoes.filter(l => progresso[l.num] === 'completo').length
+  const totalGeral = todasLicoes.length
+  const pct = Math.round((totalCompletos / totalGeral) * 100)
+  const totalNivel = licoes.filter(l => progresso[l.num] === 'completo').length
+  const pctNivel = Math.round((totalNivel / licoes.length) * 100)
 
   return (
     <div style={{ fontFamily:"'Crimson Pro',Georgia,serif", background:'#fff' }}>
@@ -101,9 +112,9 @@ export default function EsperantoAprender() {
             ))}
           </div>
           <div className="ea-progress" style={{ marginTop:'20px', maxWidth:'400px' }}>
-            <div className="ea-progress-bar" style={{ width:`${pct}%` }}></div>
+            <div className="ea-progress-bar" style={{ width:`${pctNivel}%` }}></div>
           </div>
-          <p style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)', marginTop:'6px' }}>{totalCompletos} de {licoes.length} lições concluídas ({pct}%)</p>
+          <p style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)', marginTop:'6px' }}>{totalNivel} de {licoes.length} lições deste nível concluídas ({pctNivel}%) · Total: {totalCompletos}/{totalGeral}</p>
         </div>
       </div>
 
