@@ -152,15 +152,16 @@ const css = `
 .hero-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;color:#c9a650;font-size:11px;letter-spacing:8px;}
 .hero-divider::before,.hero-divider::after{content:'';width:60px;height:1px;background:#c9a650;opacity:0.4;}
 .hero-desc{font-size:18px;color:#555;max-width:560px;margin:0 auto 36px;line-height:1.8;font-weight:300;}
-.btn-p{background:#1a3a6b;color:#fff;border:none;border-radius:2px;padding:14px 36px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;margin-right:12px;}
+.btn-p{background:#1a3a6b;color:#fff;border:none;border-radius:2px;padding:14px 28px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;margin-right:8px;margin-bottom:8px;}
 .btn-p:hover{background:#0f2447;}
-.btn-s{background:transparent;color:#1a3a6b;border:1px solid #1a3a6b;border-radius:2px;padding:14px 36px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;}
+.btn-s{background:transparent;color:#1a3a6b;border:1px solid #1a3a6b;border-radius:2px;padding:14px 28px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;margin-bottom:8px;}
 .btn-s:hover{background:#1a3a6b;color:#fff;}
 .section{padding:56px 32px;border-bottom:1px solid #e0d8c8;}
 .section-label{font-size:10px;letter-spacing:0.22em;color:#c9a650;text-transform:uppercase;margin-bottom:8px;}
 .section-title{font-family:'Cinzel',serif;font-size:26px;font-weight:500;color:#1a3a6b;letter-spacing:0.04em;}
 .section-rule{width:40px;height:2px;background:#c9a650;margin:12px 0 24px;}
 .spirit-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+        .eo-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
 .spirit-text p{font-size:16px;color:#555;line-height:1.9;font-weight:300;margin-bottom:16px;}
 .obra-tag{display:inline-block;background:#f0f4f9;color:#1a3a6b;font-size:11px;padding:3px 10px;border-radius:2px;margin-top:8px;font-style:italic;}
 .pillars{display:flex;flex-direction:column;gap:10px;}
@@ -212,6 +213,7 @@ const css = `
   .hero-title{font-size:36px;}
   .section{padding:36px 16px;}
   .spirit-grid{grid-template-columns:1fr;}
+  .eo-grid{grid-template-columns:1fr !important;}
   .footer{padding:20px 16px;flex-direction:column;text-align:center;}
   .f-links{flex-wrap:wrap;justify-content:center;}
   .chat-msgs{max-height:50vh;}
@@ -412,7 +414,7 @@ export default function Home() {
 
       {/* ESPERANTO CTA */}
       <section className="section" style={{ background:'#f8f6f2' }}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'32px', alignItems:'center' }}>
+        <div className="eo-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'32px', alignItems:'center' }}>
           <div>
             <p className="section-label">Novidade</p>
             <h2 className="section-title">Aprenda Esperanto</h2>

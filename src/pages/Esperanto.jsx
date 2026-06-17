@@ -89,6 +89,8 @@ export default function Esperanto() {
         .ep-radio{font-size:13px;padding:6px 14px;border:1px solid #e0d8c8;border-radius:20px;text-decoration:none;color:#555;transition:all 0.2s;background:#fff;}
         .ep-radio:hover{border-color:#1a3a6b;color:#1a3a6b;}
         @media(max-width:768px){
+          .ep-hero-grid{grid-template-columns:1fr !important; padding:28px 16px !important;}
+          .ep-sec-inner{padding:32px 16px !important;}
           .ep-conn-grid{grid-template-columns:1fr;}
           .ep-parallel{grid-template-columns:1fr;}
           .ep-par-pt{border-right:none;border-bottom:1px solid #e0d8c8;}
@@ -102,7 +104,7 @@ export default function Esperanto() {
       <Nav />
 
       {/* HERO */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'40px', padding:'48px 32px', background:'#f8f6f2', borderBottom:'1px solid #e0d8c8', alignItems:'center' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'40px', padding:'48px 32px', background:'#f8f6f2', borderBottom:'1px solid #e0d8c8', alignItems:'center' }} className="ep-hero-grid">
         <div>
           <p style={S.label}>Lingvo & Spirito</p>
           <h1 style={{ fontFamily:"'Cinzel',serif", fontSize:'32px', fontWeight:500, color:'#1a3a6b', marginBottom:'4px' }}>Esperanto</h1>
@@ -111,7 +113,9 @@ export default function Esperanto() {
           <p style={{ fontSize:'16px', color:'#555', lineHeight:1.9, fontWeight:300 }}>O Esperanto é uma língua construída com um propósito nobre: unir os povos do mundo numa comunicação igualitária, sem fronteiras culturais ou políticas. Criada em 1887 por Ludwig Lazarus Zamenhof, ela carrega um espírito de fraternidade universal que ressoa profundamente com os ideais do Espiritismo.</p>
         </div>
         <div style={{ background:'#1a3a6b', borderRadius:'8px', padding:'28px', textAlign:'center' }}>
-          <div style={{ fontSize:'52px', marginBottom:'12px' }}>✦</div>
+          <svg viewBox="0 0 100 100" width="100" height="100" style={{ margin:'0 auto 12px', display:'block' }}>
+            <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#3a9e4d" stroke="#2d7a3a" strokeWidth="1"/>
+          </svg>
           <p style={{ fontFamily:"'Cinzel',serif", fontSize:'16px', letterSpacing:'0.1em', color:'#c9a650', marginBottom:'8px' }}>LA VERDA STELO</p>
           <p style={{ fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:1.7, fontWeight:300 }}>A estrela verde de cinco pontas é o símbolo do Esperanto — representando os cinco continentes unidos por uma língua comum.</p>
         </div>
