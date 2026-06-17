@@ -44,13 +44,18 @@ export default function EsperantoAprender() {
 
   const getLicaoStatus = (num) => {
     if (progresso[num] === 'completo') return 'completo'
-    // primeira licao sempre disponivel
-    if (num === licoes[0].num) return 'disponivel'
-    // verifica se a licao anterior foi concluida
-    const idxAtual = licoes.findIndex(l => l.num === num)
-    if (idxAtual <= 0) return 'disponivel'
-    const anterior = licoes[idxAtual - 1]
-    if (progresso[anterior.num] === 'completo') return 'disponivel'
+    // licao 1 sempre disponivel
+    if (num === 1) return 'disponivel'
+    // licoes intermediarias so desbloqueiam se completou todas as iniciantes
+    if (num >= 11) {
+      const todasIniciantes = licoes_iniciante.every(l => progresso[l.num] === 'completo')
+      if (!todasIniciantes) return 'bloqueado'
+      if (num === 11) return 'disponivel'
+      if (progresso[num - 1] === 'completo') return 'disponivel'
+      return 'bloqueado'
+    }
+    // licoes iniciantes: verifica se a anterior foi concluida
+    if (progresso[num - 1] === 'completo') return 'disponivel'
     return 'bloqueado'
   }
 
@@ -114,7 +119,10 @@ export default function EsperantoAprender() {
           <div className="ea-progress" style={{ marginTop:'20px', maxWidth:'400px' }}>
             <div className="ea-progress-bar" style={{ width:`${pctNivel}%` }}></div>
           </div>
-          <p style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)', marginTop:'6px' }}>{totalNivel} de {licoes.length} lições deste nível concluídas ({pctNivel}%) · Total: {totalCompletos}/{totalGeral}</p>
+          <div style={{ display:'flex', alignItems:'center', gap:'16px', marginTop:'6px', flexWrap:'wrap' }}>
+            <p style={{ fontSize:'12px', color:'rgba(255,255,255,0.5)' }}>{totalNivel} de {licoes.length} lições deste nível · Total: {totalCompletos}/{totalGeral}</p>
+            <button onClick={()=>{ if(window.confirm('Tem certeza? Isso vai resetar todo o progresso do curso.')) { localStorage.removeItem('johano_eo_progresso'); setProgresso({}) } }} style={{ fontSize:'11px', background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:'4px', padding:'3px 10px', color:'rgba(255,255,255,0.5)', cursor:'pointer' }}>🔄 Resetar progresso</button>
+          </div>
         </div>
       </div>
 
