@@ -72,91 +72,139 @@ function stripHtml(html) {
   return html.replace(/<[^>]+>/g, '').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
 }
 
+function cleanMarkdown(text) {
+  return text
+    .replace(/#{1,3} /g, '')           // remove ## headers
+    .replace(/\*\*(.*?)\*\*/g, '$1')   // remove **bold**
+    .replace(/\*(.*?)\*/g, '$1')       // remove *italic*
+    .replace(/^> /gm, '')              // remove blockquotes >
+    .replace(/^- /gm, '• ')           // convert lists
+    .replace(/---/g, '')               // remove separators
+    .replace(/\n{3,}/g, '\n\n')        // max 2 newlines
+    .trim()
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const paragraphs = text.split('\n')
+  let currentY = y
+  const allLines = []
+
+  for (const para of paragraphs) {
+    if (para.trim() === '') {
+      allLines.push({ text: '', y: currentY, empty: true })
+      currentY += lineHeight * 0.6
+      continue
+    }
+    const words = para.split(' ')
+    let line = ''
+    for (const word of words) {
+      const test = line ? line + ' ' + word : word
+      if (ctx.measureText(test).width > maxWidth && line) {
+        allLines.push({ text: line, y: currentY })
+        currentY += lineHeight
+        line = word
+      } else {
+        line = test
+      }
+    }
+    if (line) {
+      allLines.push({ text: line, y: currentY })
+      currentY += lineHeight
+    }
+  }
+  return { lines: allLines, totalHeight: currentY - y }
+}
+
 function generateShareImage(text, callback) {
+  const clean = cleanMarkdown(text)
+
+  // Calcular altura necessaria dinamicamente
   const canvas = document.createElement('canvas')
   canvas.width = 1080
-  canvas.height = 1080
   const ctx = canvas.getContext('2d')
+  ctx.font = '30px Georgia, serif'
+
+  const maxWidth = 860
+  const lineHeight = 48
+  const startY = 200
+  const padding = 100
+  const footerH = 140
+
+  // Pre-calcular linhas para saber altura total
+  const { lines, totalHeight } = wrapText(ctx, clean, 110, startY, maxWidth, lineHeight)
+  const canvasH = Math.max(900, startY + totalHeight + footerH + padding)
+  canvas.height = canvasH
 
   // Background gradient
-  const grad = ctx.createLinearGradient(0, 0, 0, 1080)
+  const grad = ctx.createLinearGradient(0, 0, 0, canvasH)
   grad.addColorStop(0, '#0d1f3c')
   grad.addColorStop(1, '#1a3a6b')
   ctx.fillStyle = grad
-  ctx.fillRect(0, 0, 1080, 1080)
+  ctx.fillRect(0, 0, 1080, canvasH)
 
-  // Top accent line
+  // Left accent line
   ctx.fillStyle = '#c9a650'
-  ctx.fillRect(80, 0, 4, 1080)
+  ctx.fillRect(60, 0, 3, canvasH)
 
-  // Star symbol
+  // Header background
+  ctx.fillStyle = 'rgba(0,0,0,0.2)'
+  ctx.fillRect(0, 0, 1080, 130)
+
+  // Star + Logo
   ctx.fillStyle = '#c9a650'
-  ctx.font = 'bold 48px serif'
-  ctx.fillText('✦', 110, 100)
+  ctx.font = 'bold 44px serif'
+  ctx.fillText('✦', 90, 85)
 
-  // JOHANO logo
   ctx.fillStyle = '#ffffff'
-  ctx.font = 'bold 42px Georgia, serif'
-  ctx.letterSpacing = '8px'
-  ctx.fillText('JOHANO', 170, 100)
+  ctx.font = 'bold 38px Georgia, serif'
+  ctx.fillText('JOHANO', 155, 85)
 
-  // Separator line
-  ctx.fillStyle = 'rgba(201, 166, 80, 0.4)'
-  ctx.fillRect(110, 120, 860, 1)
+  ctx.fillStyle = 'rgba(201,166,80,0.5)'
+  ctx.font = 'italic 20px Georgia, serif'
+  ctx.fillText('Portal de Estudos Espíritas', 157, 112)
 
-  // Quote mark
-  ctx.fillStyle = 'rgba(201, 166, 80, 0.25)'
-  ctx.font = 'bold 180px Georgia, serif'
-  ctx.fillText('"', 90, 300)
+  // Header separator
+  ctx.fillStyle = 'rgba(201,166,80,0.35)'
+  ctx.fillRect(90, 135, 900, 1)
 
-  // Text content - wrap long text
-  const clean = stripHtml(text).trim()
-  const words = clean.split(' ')
-  const lines = []
-  let line = ''
-  const maxWidth = 840
-  ctx.font = '32px Georgia, serif'
-  
-  for (const word of words) {
-    const test = line ? line + ' ' + word : word
-    if (ctx.measureText(test).width > maxWidth && line) {
-      lines.push(line)
-      line = word
-      if (lines.length >= 14) { lines.push('...'); break }
+  // Quote decoration
+  ctx.fillStyle = 'rgba(201,166,80,0.12)'
+  ctx.font = 'bold 160px Georgia, serif'
+  ctx.fillText('"', 70, 310)
+
+  // Draw text lines
+  ctx.font = '30px Georgia, serif'
+  for (const line of lines) {
+    if (line.empty) continue
+    // Highlight lines that look like titles (short lines after empty)
+    const isBullet = line.text.startsWith('•')
+    if (isBullet) {
+      ctx.fillStyle = '#c9a650'
+      ctx.font = 'bold 30px Georgia, serif'
     } else {
-      line = test
+      ctx.fillStyle = '#e8e0cc'
+      ctx.font = '30px Georgia, serif'
     }
+    ctx.fillText(line.text, 110, line.y)
   }
-  if (line && lines.length < 14) lines.push(line)
 
-  // Draw text
-  ctx.fillStyle = '#e8e0cc'
-  ctx.font = '32px Georgia, serif'
-  const startY = 260
-  const lineH = 52
-  lines.forEach((l, i) => {
-    ctx.fillText(l, 110, startY + (i * lineH))
-  })
+  // Footer
+  const footerY = canvasH - footerH
+  ctx.fillStyle = 'rgba(201,166,80,0.25)'
+  ctx.fillRect(90, footerY, 900, 1)
 
-  // Bottom section
-  const bottomY = 950
-  ctx.fillStyle = 'rgba(201, 166, 80, 0.3)'
-  ctx.fillRect(110, bottomY - 20, 860, 1)
+  ctx.fillStyle = 'rgba(201,166,80,0.6)'
+  ctx.font = 'italic 22px Georgia, serif'
+  ctx.fillText('Saĝo · Amo · Lumo — Sabedoria · Amor · Luz', 90, footerY + 35)
 
-  // Tagline
-  ctx.fillStyle = 'rgba(201, 166, 80, 0.7)'
-  ctx.font = 'italic 24px Georgia, serif'
-  ctx.fillText('Saĝo · Amo · Lumo', 110, bottomY + 20)
-
-  // URL
   ctx.fillStyle = '#c9a650'
-  ctx.font = 'bold 26px Georgia, serif'
-  ctx.fillText('johano.com.br', 110, bottomY + 60)
+  ctx.font = 'bold 24px Georgia, serif'
+  ctx.fillText('johano.com.br/chat', 90, footerY + 70)
 
-  // Star bottom right
-  ctx.fillStyle = 'rgba(201, 166, 80, 0.15)'
-  ctx.font = 'bold 200px serif'
-  ctx.fillText('✦', 780, 1040)
+  // Star watermark bottom right
+  ctx.fillStyle = 'rgba(201,166,80,0.08)'
+  ctx.font = 'bold 180px serif'
+  ctx.fillText('✦', 830, canvasH - 20)
 
   callback(canvas.toDataURL('image/png'))
 }
