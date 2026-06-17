@@ -124,15 +124,16 @@ function generateShareImage(text, callback) {
   const ctx = canvas.getContext('2d')
   ctx.font = '30px Georgia, serif'
 
-  const maxWidth = 860
-  const lineHeight = 48
+  const maxWidth = 820
+  const lineHeight = 50
   const startY = 200
-  const padding = 100
+  const padding = 120
   const footerH = 140
 
   // Pre-calcular linhas para saber altura total
+  ctx.font = '28px Georgia, serif'
   const { lines, totalHeight } = wrapText(ctx, clean, 110, startY, maxWidth, lineHeight)
-  const canvasH = Math.max(900, startY + totalHeight + footerH + padding)
+  const canvasH = Math.max(960, startY + totalHeight + footerH + padding)
   canvas.height = canvasH
 
   // Background gradient
@@ -173,19 +174,19 @@ function generateShareImage(text, callback) {
   ctx.fillText('"', 70, 310)
 
   // Draw text lines
-  ctx.font = '30px Georgia, serif'
+  ctx.font = '28px Georgia, serif'
   for (const line of lines) {
     if (line.empty) continue
-    // Highlight lines that look like titles (short lines after empty)
     const isBullet = line.text.startsWith('•')
     if (isBullet) {
       ctx.fillStyle = '#c9a650'
-      ctx.font = 'bold 30px Georgia, serif'
+      ctx.font = 'bold 28px Georgia, serif'
     } else {
       ctx.fillStyle = '#e8e0cc'
-      ctx.font = '30px Georgia, serif'
+      ctx.font = '28px Georgia, serif'
     }
-    ctx.fillText(line.text, 110, line.y)
+    // Never draw text beyond safe area
+    ctx.fillText(line.text, 110, line.y, 860)
   }
 
   // Footer
