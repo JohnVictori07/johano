@@ -68,6 +68,99 @@ function generateTitle(content) {
   return text.length > 40 ? text.substring(0, 40) + '...' : text
 }
 
+function stripHtml(html) {
+  return html.replace(/<[^>]+>/g, '').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+}
+
+function generateShareImage(text, callback) {
+  const canvas = document.createElement('canvas')
+  canvas.width = 1080
+  canvas.height = 1080
+  const ctx = canvas.getContext('2d')
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, 1080)
+  grad.addColorStop(0, '#0d1f3c')
+  grad.addColorStop(1, '#1a3a6b')
+  ctx.fillStyle = grad
+  ctx.fillRect(0, 0, 1080, 1080)
+
+  // Top accent line
+  ctx.fillStyle = '#c9a650'
+  ctx.fillRect(80, 0, 4, 1080)
+
+  // Star symbol
+  ctx.fillStyle = '#c9a650'
+  ctx.font = 'bold 48px serif'
+  ctx.fillText('✦', 110, 100)
+
+  // JOHANO logo
+  ctx.fillStyle = '#ffffff'
+  ctx.font = 'bold 42px Georgia, serif'
+  ctx.letterSpacing = '8px'
+  ctx.fillText('JOHANO', 170, 100)
+
+  // Separator line
+  ctx.fillStyle = 'rgba(201, 166, 80, 0.4)'
+  ctx.fillRect(110, 120, 860, 1)
+
+  // Quote mark
+  ctx.fillStyle = 'rgba(201, 166, 80, 0.25)'
+  ctx.font = 'bold 180px Georgia, serif'
+  ctx.fillText('"', 90, 300)
+
+  // Text content - wrap long text
+  const clean = stripHtml(text).trim()
+  const words = clean.split(' ')
+  const lines = []
+  let line = ''
+  const maxWidth = 840
+  ctx.font = '32px Georgia, serif'
+  
+  for (const word of words) {
+    const test = line ? line + ' ' + word : word
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line)
+      line = word
+      if (lines.length >= 14) { lines.push('...'); break }
+    } else {
+      line = test
+    }
+  }
+  if (line && lines.length < 14) lines.push(line)
+
+  // Draw text
+  ctx.fillStyle = '#e8e0cc'
+  ctx.font = '32px Georgia, serif'
+  const startY = 260
+  const lineH = 52
+  lines.forEach((l, i) => {
+    ctx.fillText(l, 110, startY + (i * lineH))
+  })
+
+  // Bottom section
+  const bottomY = 950
+  ctx.fillStyle = 'rgba(201, 166, 80, 0.3)'
+  ctx.fillRect(110, bottomY - 20, 860, 1)
+
+  // Tagline
+  ctx.fillStyle = 'rgba(201, 166, 80, 0.7)'
+  ctx.font = 'italic 24px Georgia, serif'
+  ctx.fillText('Saĝo · Amo · Lumo', 110, bottomY + 20)
+
+  // URL
+  ctx.fillStyle = '#c9a650'
+  ctx.font = 'bold 26px Georgia, serif'
+  ctx.fillText('johano.com.br', 110, bottomY + 60)
+
+  // Star bottom right
+  ctx.fillStyle = 'rgba(201, 166, 80, 0.15)'
+  ctx.font = 'bold 200px serif'
+  ctx.fillText('✦', 780, 1040)
+
+  callback(canvas.toDataURL('image/png'))
+}
+
 export default function Chat() {
   const navigate = useNavigate()
   const [conversations, setConversations] = useState(() => {
@@ -87,6 +180,8 @@ export default function Chat() {
   const [pdfName, setPdfName] = useState(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [shareToast, setShareToast] = useState(false)
+  const [shareModal, setShareModal] = useState(null)
+  const [shareImg, setShareImg] = useState(null)
   const bottomRef = useRef(null)
   const fileRef = useRef(null)
   const textareaRef = useRef(null)
@@ -384,8 +479,24 @@ export default function Chat() {
           {messages.map((m, i) => (
             <div key={i} className={`msg-row${m.role==='user'?' user':''}`}>
               <div className={`msg-av${m.role==='user'?' u':' j'}`}>{m.role==='user' ? '✦' : 'J'}</div>
-              <div className={`msg-bub${m.role==='user'?' u':' j'}`}>
-                <div dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }} />
+              <div style={{ maxWidth:'calc(100% - 44px)', display:'flex', flexDirection:'column', gap:'6px' }}>
+                <div className={`msg-bub${m.role==='user'?' u':' j'}`}>
+                  <div dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }} />
+                </div>
+                {m.role==='assistant' && i > 0 && (
+                  <button
+                    onClick={()=>{
+                      setShareModal(m.content)
+                      setShareImg(null)
+                      generateShareImage(m.content, img => setShareImg(img))
+                    }}
+                    style={{ alignSelf:'flex-start', display:'flex', alignItems:'center', gap:'5px', background:'transparent', border:'1px solid #e0d8c8', borderRadius:'4px', padding:'4px 10px', fontSize:'11px', color:'#aaa', cursor:'pointer', fontFamily:"'Crimson Pro',Georgia,serif", transition:'all 0.2s' }}
+                    onMouseOver={e=>{ e.currentTarget.style.borderColor='#c9a650'; e.currentTarget.style.color='#c9a650' }}
+                    onMouseOut={e=>{ e.currentTarget.style.borderColor='#e0d8c8'; e.currentTarget.style.color='#aaa' }}
+                  >
+                    🖼️ Compartilhar
+                  </button>
+                )}
               </div>
             </div>
           ))}
@@ -419,6 +530,56 @@ export default function Chat() {
           </div>
         </div>
       </div>
+
+      {shareModal && (
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.75)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }} onClick={()=>setShareModal(null)}>
+          <div style={{ background:'#fff', borderRadius:'12px', padding:'24px', maxWidth:'480px', width:'100%', maxHeight:'90vh', overflowY:'auto' }} onClick={e=>e.stopPropagation()}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+              <div>
+                <p style={{ fontFamily:"'Cinzel',serif", fontSize:'15px', color:'#1a3a6b', marginBottom:'2px' }}>Compartilhar resposta</p>
+                <p style={{ fontSize:'12px', color:'#aaa', fontStyle:'italic' }}>Imagem gerada para compartilhar nas redes</p>
+              </div>
+              <button onClick={()=>setShareModal(null)} style={{ background:'transparent', border:'none', cursor:'pointer', fontSize:'20px', color:'#aaa' }}>✕</button>
+            </div>
+
+            {!shareImg ? (
+              <div style={{ height:'200px', display:'flex', alignItems:'center', justifyContent:'center', background:'#f8f6f2', borderRadius:'8px', marginBottom:'16px' }}>
+                <p style={{ fontSize:'14px', color:'#aaa', fontStyle:'italic' }}>Gerando imagem...</p>
+              </div>
+            ) : (
+              <img src={shareImg} alt="Compartilhar" style={{ width:'100%', borderRadius:'8px', marginBottom:'16px', boxShadow:'0 4px 20px rgba(0,0,0,0.15)' }} />
+            )}
+
+            <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+              {shareImg && (
+                <>
+                  <a
+                    href={shareImg}
+                    download="johano-resposta.png"
+                    style={{ flex:1, background:'#1a3a6b', color:'#fff', border:'none', borderRadius:'6px', padding:'12px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', textAlign:'center', textDecoration:'none', display:'block' }}
+                  >⬇️ Baixar imagem</a>
+                  <button
+                    onClick={()=>{
+                      if (navigator.share) {
+                        fetch(shareImg).then(r=>r.blob()).then(blob=>{
+                          const file = new File([blob], 'johano-resposta.png', {type:'image/png'})
+                          navigator.share({ files:[file], title:'Johano — Estudos Espíritas', text:'Compartilhando uma resposta do Johano Chat', url:'https://www.johano.com.br/chat' })
+                        })
+                      } else {
+                        navigator.clipboard.writeText('https://www.johano.com.br/chat')
+                        setShareToast(true)
+                        setTimeout(()=>setShareToast(false), 2500)
+                      }
+                    }}
+                    style={{ flex:1, background:'#c9a650', color:'#1a3a6b', border:'none', borderRadius:'6px', padding:'12px', fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.06em', cursor:'pointer', fontWeight:600 }}
+                  >📤 Compartilhar</button>
+                </>
+              )}
+            </div>
+            <p style={{ fontSize:'11px', color:'#bbb', textAlign:'center', marginTop:'10px', fontStyle:'italic' }}>A imagem inclui o logo do Johano e o link johano.com.br</p>
+          </div>
+        </div>
+      )}
 
       {shareToast && <div className="toast">🔗 Link copiado! Compartilhe o Johano.</div>}
     </div>
